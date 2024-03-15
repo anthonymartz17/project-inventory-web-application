@@ -1,0 +1,185 @@
+:root {
+	--lightest-color: #f2f2f2;
+	--light-color: #d9d9d9;
+	--mid-color: #a6a6a6;
+	--dark-color: #545454;
+}
+
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	line-height: 1.6;
+	background: var(--lightest-color);
+	color: var(--dark-color);
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 5em 1fr 5em;
+	grid-template-areas:
+		"header"
+		"main"
+		"footer";
+	height: 100vh;
+}
+
+/* Remove default list styles */
+ul,
+ol {
+	list-style: none;
+}
+
+/* Remove default link styles */
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+/* Remove default button styles */
+button {
+	border: none;
+	background: none;
+	cursor: pointer;
+}
+
+/* Remove default input styles */
+input,
+textarea,
+select,
+button {
+	font-family: inherit;
+	font-size: inherit;
+	border-radius: 0;
+	border: none;
+	outline: none;
+}
+header {
+	grid-area: header;
+	background: var(--mid-color);
+	color: var(--lightest-color);
+	display: grid;
+	align-items: end;
+	grid-template-columns: 50px 1fr;
+	/* height: 5em; */
+	padding: 0.5em 1em;
+	box-shadow: 0px 13px 10px -15px var(--dark-color);
+	margin-bottom: 1em;
+}
+
+.fa-bars {
+	font-size: 2em;
+	cursor: pointer;
+}
+
+.logo {
+}
+.navigation {
+	display: flex;
+	justify-content: end;
+}
+.navigation__list--dskt {
+	display: none;
+	gap: 2em;
+	width: fit-content;
+}
+.navigation__item--mobile {
+	margin-bottom: 0.5em;
+}
+.mobile__backdrop {
+	backdrop-filter: blur(2px);
+	position: absolute;
+	height: 100vh;
+	width: 100%;
+	top: 0;
+	opacity: 0;
+	pointer-events: none;
+	transition: all 250ms ease-in-out;
+}
+.mobile__backdrop--active {
+	opacity: 1;
+	pointer-events: all;
+}
+
+.mobile__menu {
+	background: var(--dark-color);
+	position: absolute;
+	height: 100vh;
+	top: 0;
+	right: -280px;
+	width: 70vw;
+	padding: 3em 1em;
+	transition: all 250ms ease-in-out;
+	opacity: 0;
+	backdrop-filter: blur(5px);
+}
+.mobile__menu--show {
+	opacity: 1;
+	right: 0;
+}
+
+main {
+	grid-area: main;
+	background-color: blue;
+}
+
+/* Inventory */
+.inventory {
+	background-color: red;
+}
+/* 			<section class="inventory">
+					<div class="control">
+						<input
+							type="text"
+							name="search"
+							id="search-bar"
+							class="control__search"
+						/>
+						<select name="sort" id="sort" class="control__sort">
+							<option value="category">Category</option>
+							<option value="instock">InStock</option>
+							<option value="provider">Provider</option>
+						</select>
+						<button class="control__button--new">New Product</button>
+					</div>
+					<table class="table">
+						<tr class="table__row table__row--header">
+							<th>ID</th>
+							<th>Name</th>
+							<th>Qty</th>
+							<th>Provider</th>
+							<th>Actions</th>
+						</tr>
+						<tr class="table__row table__row--data">
+							<td>2332</td>
+							<td>Laptop</td>
+							<td>4</td>
+							<td>Apple</td>
+							<td>. . .</td>
+						</tr>
+					</table>
+				</section> */
+
+/* store */
+.store {
+	display: none;
+}
+
+footer {
+	grid-area: footer;
+	background-color: var(--light-color);
+	width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  padding-bottom: 1em;
+}
+
+footer small{
+display: block;
+
+}
