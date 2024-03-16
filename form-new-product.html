@@ -1,0 +1,42 @@
+<section class="form__card card">
+	<form id="new-product" class="form__form">
+		<div class="form__input--container">
+			<label for="name">Name:</label>
+			<input type="text" id="name" name="name" class="form__input" />
+		</div>
+		<div class="form__input--container">
+			<label for="name">Quantity:</label>
+			<input type="number" id="qty" name="quantity" class="form__input" />
+		</div>
+		<label for="provider">Provider:</label>
+		<div class="form__input--container">
+			<select name="provider" id="provider" class="form__input">
+				<option value="">Select</option>
+				<option value="Amazon">Amazon</option>
+				<option value="Alibaba">Alibaba</option>
+				<option value="Apple">Nike</option>
+				<option value="Apple">Addidas</option>
+			</select>
+		</div>
+		<div class="form__input--container">
+			<label for="category">Category:</label>
+			<select name="provider" id="provider" class="form__input">
+				<option value="">Select</option>
+				<option value="Amazon">Shoes</option>
+				<option value="Alibaba">Clothing</option>
+				<option value="Apple">Accesories</option>
+			</select>
+		</div>
+		<div class="form__input--container form__input--photo">
+			<input type="file" id="photo" accept="image/*" class="form__photo" />
+			<div id="preview" class="preview">
+				<i class="fa-solid fa-file-arrow-up upload-icon"></i>
+				<span style="display: block">Upload File</span>
+			</div>
+		</div>
+		<div class="form__buttons">
+			<button class="btn__secondary">Cancel</button>
+			<button class="btn__primary">Submit</button>
+		</div>
+	</form>
+</section>

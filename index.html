@@ -4,6 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="./styles.css" />
+    <link rel="import" href="./form-new-product.html" id="form-new-product">
 		<script src="./app.js" defer></script>
 		<script
 			src="https://kit.fontawesome.com/706abcc79b.js"
@@ -42,6 +43,7 @@
 		</header>
 
 		<main>
+			
 			<section class="inventory">
 				<div class="control">
 					<input
@@ -49,39 +51,265 @@
 						name="search"
 						id="search-bar"
 						class="control__search"
-            placeholder="Search..."
+						placeholder="Search..."
 					/>
 					<select name="sort" id="sort" class="control__sort">
 						<option value="category">Category</option>
 						<option value="instock">InStock</option>
 						<option value="provider">Provider</option>
 					</select>
-					<button class="control__button--new">
-						<i class="fa-solid fa-plus"></i>  New Product
+					<button class="control__button--new btn__primary">
+						<i class="fa-solid fa-plus"></i> New Product
 					</button>
 				</div>
-				<table class="table">
-					<tr class="table__row table__row--header">
-						<th>ID</th>
-						<th>Name</th>
-						<th>Qty</th>
-						<th>Provider</th>
-						<th>Actions</th>
-					</tr>
-					<tr class="table__row table__row--data">
-						<td>2332</td>
-						<td>Laptop</td>
-						<td>4</td>
-						<td>Apple</td>
-						<td>. . .</td>
-					</tr>
-				</table>
+				<div class="table__container card">
+					<table>
+						<thead>
+							<tr class="table__row table__row--header">
+								<th>ID</th>
+								<th>Name</th>
+								<th>Qty</th>
+								<th>Provider</th>
+								<th>Status</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td class="table__row--actions">
+									<i class="fa-solid fa-ellipsis actions-btn"></i>
+									<div class="actions">
+										<p class="actions__items">
+											<i class="fa-regular fa-pen-to-square"></i> Edit
+										</p>
+										<p class="actions__items">
+											<i class="fa-solid fa-trash-can"></i> Delete
+										</p>
+									</div>
+								</td>
+							</tr>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td>. . .</td>
+							</tr>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td>. . .</td>
+							</tr>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td>. . .</td>
+							</tr>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td>. . .</td>
+							</tr>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td>. . .</td>
+							</tr>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td>. . .</td>
+							</tr>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td>. . .</td>
+							</tr>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td>. . .</td>
+							</tr>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td>. . .</td>
+							</tr>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td>. . .</td>
+							</tr>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td>. . .</td>
+							</tr>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td>. . .</td>
+							</tr>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td>. . .</td>
+							</tr>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td>. . .</td>
+							</tr>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td>. . .</td>
+							</tr>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td>. . .</td>
+							</tr>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td>. . .</td>
+							</tr>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td>. . .</td>
+							</tr>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td>. . .</td>
+							</tr>
+							<tr class="table__row table__row--body">
+								<td>2332</td>
+								<td>Laptop</td>
+								<td>4</td>
+								<td>Apple</td>
+								<td>InStock</td>
+								<td>. . .</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</section>
+
 			<section class="store"></section>
+			<footer>
+				<small>&copy; 2024 Antonio Martinez.</small>
+				<small> All rights reserved.</small>
+			</footer>
 		</main>
-		<footer>
-			<small>&copy; 2024 Antonio Martinez.</small>
-			<small> All rights reserved.</small>
-		</footer>
+    <section class="form__card card">
+      <form id="new-product" class="form__form">
+        <div class="form__input--container">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" class="form__input" />
+        </div>
+        <div class="form__input--container">
+          <label for="name">Quantity:</label>
+          <input type="number" id="qty" name="quantity" class="form__input" />
+        </div>
+        <label for="provider">Provider:</label>
+        <div class="form__input--container">
+          <select name="provider" id="provider" class="form__input">
+            <option value="">Select</option>
+            <option value="Amazon">Amazon</option>
+            <option value="Alibaba">Alibaba</option>
+            <option value="Apple">Nike</option>
+            <option value="Apple">Addidas</option>
+          </select>
+        </div>
+        <div class="form__input--container">
+          <label for="category">Category:</label>
+          <select name="provider" id="provider" class="form__input">
+            <option value="">Select</option>
+            <option value="Amazon">Shoes</option>
+            <option value="Alibaba">Clothing</option>
+            <option value="Apple">Accesories</option>
+          </select>
+        </div>
+        <div class="form__input--container form__input--photo">
+          <input
+            type="file"
+            id="photo"
+            accept="image/*"
+            class="form__photo"
+          />
+          <div id="preview" class="preview">
+            <i class="fa-solid fa-file-arrow-up upload-icon"></i>
+            <span style="display: block;">Upload File</span>
+          </div>
+        </div>
+        <div class="form__buttons">
+          <button class="btn__secondary">Cancel</button>
+          <button class="btn__primary">Submit</button>
+        </div>
+      </form>
+    </section> 
 	</body>
 </html>
