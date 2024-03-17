@@ -240,8 +240,12 @@ tbody {
 	top: 0;
 	bottom: 0;
 	width: 100%;
-	z-index: 2;
+  height: 100vh;
+	z-index: 1;
 	cursor: pointer;
+  padding: 1em;
+  /* background-color: red; */
+
 }
 .show-actions {
 	opacity: 1;
@@ -273,6 +277,9 @@ tbody {
 	height: 70%;
 	border-radius: 5px;
 	display: none;
+  z-index: 100;
+
+
 }
 .form__form {
 	width: 90%;

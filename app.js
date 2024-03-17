@@ -1,4 +1,5 @@
-//mobile menue
+//Mobile Menu Start----------
+
 const mobileMenu = document.querySelector(".mobile__menu");
 const mobileMenuItems = document.querySelectorAll(".navigation__item--mobile");
 
@@ -16,53 +17,47 @@ function toggleMobileMenu() {
 	mobileMenu.classList.toggle("mobile__menu--show");
 	backdrop.classList.toggle("mobile__backdrop--active");
 }
+//Mobile Menu End----------
 
-//table
+//Table Start----------
+
 const actionBtn = document.querySelectorAll(".actions-btn");
 actionBtn.forEach((ele) => ele.addEventListener("click", showActionsCard));
 
-//form
-
-// const photoUpload = document.getElementById("photo");
-// const preview = document.getElementById("preview");
-// photoUpload.addEventListener("change", showPhotoPreview);
-const newProductBtn = document.querySelector(".control__button--new");
-newProductBtn.addEventListener("click", showForm);
-
-//functions
-
 function showActionsCard(e) {
-	const actionsCard = document.querySelector(".actions");
-	actionsCard.classList.toggle("show-actions");
+	e.target.nextElementSibling.classList.toggle("show-actions");
 	const modal = getModal();
-	modal.addEventListener("click", (e) => {
-		actionsCard.classList.toggle("show-actions");
-		removeModal();
+	modal.addEventListener("click", () => {
+		e.target.nextElementSibling.classList.toggle("show-actions");
 	});
 }
 
-function getModal() {
-	const modal = document.createElement("div");
-	modal.classList.add("modal");
-	document.body.prepend(modal);
-	document.body.style.overflow = "hidden";
-	return modal;
-}
-
-function removeModal(e) {
-
-  const modal = document.body.querySelector(".modal");
-	if (modal) {
-		const form = modal.querySelector(".form__card");
-		if (form) {
-			document.body.append(form);
-		}
-		modal.remove();
-		document.body.style.overflow = "auto";
-	}
-}
 function removeItem(e) {
 	removeModal(e);
+}
+
+//Table End----------
+
+//Form Start----------
+
+const newProductBtn = document.querySelector(".control__button--new");
+newProductBtn.addEventListener("click", showForm);
+const photoUpload = document.getElementById("photo");
+photoUpload.addEventListener("change", showPhotoPreview);
+const preview = document.getElementById("preview");
+
+function showForm(e) {
+	const modal = getModal();
+	modal.style.background = "rgba(0, 0, 0, 0.661)";
+	const form = document.querySelector(".form__card");
+	form.style.display = "block";
+	modal.addEventListener("click", keepFormAlive);
+	modal.append(form);
+}
+function keepFormAlive(e) {
+	if (e.target.classList.contains("modal")) {
+		document.body.append(e.target.firstElementChild);
+	}
 }
 
 function showPhotoPreview(e) {
@@ -85,6 +80,7 @@ function createImg(e) {
 
 	return img;
 }
+
 function clearPreview() {
 	const previewsPhoto = document.querySelector(".photo-uploaded");
 	if (previewsPhoto) {
@@ -92,11 +88,26 @@ function clearPreview() {
 	}
 }
 
-function showForm(e) {
-  const modal = getModal();
-  modal.style.background = 'rgba(0, 0, 0, 0.661)';
-	const form = document.querySelector(".form__card");
-	form.style.display = "block";
-	modal.addEventListener("click", removeModal);
-	modal.append(form);
+//Form End----------
+
+//Reusables Start----------
+
+function getModal() {
+	const modal = document.createElement("div");
+	modal.classList.add("modal");
+	document.body.prepend(modal);
+	document.body.style.overflow = "hidden";
+	modal.addEventListener("click", (e) => {
+		removeModal(e);
+	});
+	return modal;
 }
+
+function removeModal(e) {
+	if (e.target.classList.contains("modal")) {
+		e.target.remove();
+		document.body.style.overflow = "auto";
+	}
+}
+
+//Reusable End----------
