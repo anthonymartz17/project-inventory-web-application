@@ -1,7 +1,7 @@
 //State
 const inventoryList = [
 	{
-		id: "1-AMZN-APP",
+		id: "1-AMZ-APP",
 		provider: "AMAZON",
 		name: "Men's Cotton T-Shirt",
 		brand: "NIKE",
@@ -9,8 +9,6 @@ const inventoryList = [
 		size: "Medium",
 		price: 29.99,
 		quantity_available: 100,
-		material: "Cotton",
-		gender: "Men",
 	},
 	{
 		id: "2-NK-SHO",
@@ -21,8 +19,6 @@ const inventoryList = [
 		size: "8",
 		price: 59.99,
 		quantity_available: 50,
-		material: "Mesh",
-		gender: "Women",
 	},
 	{
 		id: "3-ADI-ACC",
@@ -33,31 +29,29 @@ const inventoryList = [
 		size: "Universal",
 		price: 39.99,
 		quantity_available: 200,
-		material: "Genuine Leather",
-		gender: "Men",
 	},
 ];
 
-const provider = [
-	{ id: "AMZN", name: "AMAZON" },
-	{ id: "ALBB", name: "ALIBABA" },
+const providerList = [
+	{ id: "AMZ", name: "AMAZON" },
+	{ id: "ALB", name: "ALIBABA" },
 	{ id: "NK", name: "NIKE" },
 	{ id: "ADI", name: "ADDIDAS" },
 ];
-const category = [
-	{ id: "SHO", name: "Shoes" },
-	{ id: "APP", name: "Apparel" },
-	{ id: "ACC", name: "Accessories" },
+const categoryList = [
+	{ id: "SHO", name: "SHOES" },
+	{ id: "APP", name: "APPAREL" },
+	{ id: "ACC", name: "ACCESSORIES" },
 ];
 
 //On Created___________
 window.addEventListener("load", () => {
 	if (inventoryList.length > 0) {
 		inventoryList.forEach((ele) => createTableItem(ele));
-  } else {
-    const tableBody = document.getElementById("table-body")
-    tableBody.innerHTML = "No products added"
-  }
+	} else {
+		const tableBody = document.getElementById("table-body");
+		tableBody.innerHTML = "No products added";
+	}
 });
 
 //Mobile Menu Start----------
@@ -92,6 +86,99 @@ function showActionsCard(e) {
 	modal.addEventListener("click", () => {
 		e.target.nextElementSibling.classList.toggle("show-actions");
 	});
+}
+
+// function sortBy(criteria) {
+//   const sorted = 
+// }
+
+function removeItem(e) {
+	removeModal(e);
+}
+
+//Table End----------
+
+//Form Start----------
+
+const newProductBtn = document.querySelector(".control__button--new");
+const form = document.querySelector(".form__form");
+form.addEventListener("submit", handleSubmit);
+newProductBtn.addEventListener("click", showForm);
+const photoUpload = document.getElementById("photo");
+photoUpload.addEventListener("change", showPhotoPreview);
+const preview = document.getElementById("preview");
+
+function showForm(e) {
+	const modal = getModal();
+	modal.style.background = "rgba(0, 0, 0, 0.661)";
+	const form = document.querySelector(".form__card");
+	form.style.display = "block";
+	const cancelBtn = document.querySelector(".btn__cancel");
+	cancelBtn.addEventListener("click", removeModal);
+	cancelBtn.addEventListener("click", (e) => keepFormAlive(e, form));
+	modal.addEventListener("click", (e) => keepFormAlive(e, form));
+	modal.append(form);
+}
+function keepFormAlive(e, form) {
+	if (
+		e.target.classList.contains("modal") ||
+		e.target.classList.contains("btn__cancel")
+	) {
+		document.body.append(form);
+	}
+}
+
+function showPhotoPreview(e) {
+	const file = e.target.files[0];
+	const reader = new FileReader();
+	reader.onload = (e) => {
+		if (file.name) {
+			const img = createImg(e);
+			preview.innerHTML = "";
+			preview.append(img);
+		}
+	};
+	reader.readAsDataURL(file);
+}
+function createImg(e) {
+	const img = document.createElement("img");
+	img.classList.add("photo-uploaded");
+	img.src = e.target.result;
+	img.alt = "Preview";
+
+	return img;
+}
+
+function clearPreview() {
+	const previewsPhoto = document.querySelector(".photo-uploaded");
+	if (previewsPhoto) {
+		previewsPhoto.remove();
+	}
+}
+
+function handleSubmit(e) {
+	e.preventDefault();
+	const product = {
+		id: generateId(e.target.provider.value, e.target.category.value),
+		provider: e.target.provider.value,
+		category: e.target.category.value,
+		name: e.target.name.value,
+		brand: e.target.brand.value,
+		color: e.target.color.value,
+		size: e.target.size.value,
+		price: e.target.price.value,
+		quantity_available: e.target.qty.value,
+	};
+
+	inventoryList.push(product);
+	createTableItem(product);
+	form.reset();
+	removeModal(e);
+}
+function generateId(provider, category) {
+	const prov = providerList.find((ele) => ele.name === provider);
+	const cat = categoryList.find((ele) => ele.name === category);
+	return `${inventoryList.length + 1}-${prov.id}-${cat.id}`;
 }
 
 function createTableItem(item) {
@@ -151,67 +238,6 @@ function createTableItem(item) {
 	tableBody.append(tableRow);
 }
 
-function removeItem(e) {
-	removeModal(e);
-}
-
-//Table End----------
-
-//Form Start----------
-
-const newProductBtn = document.querySelector(".control__button--new");
-newProductBtn.addEventListener("click", showForm);
-const photoUpload = document.getElementById("photo");
-photoUpload.addEventListener("change", showPhotoPreview);
-const preview = document.getElementById("preview");
-
-function showForm(e) {
-	const modal = getModal();
-	modal.style.background = "rgba(0, 0, 0, 0.661)";
-	const form = document.querySelector(".form__card");
-	form.style.display = "block";
-	const cancelBtn = document.querySelector(".btn__cancel");
-	cancelBtn.addEventListener("click", removeModal);
-	cancelBtn.addEventListener("click", (e) => keepFormAlive(e, form));
-	modal.addEventListener("click", (e) => keepFormAlive(e, form));
-	modal.append(form);
-}
-function keepFormAlive(e, form) {
-	if (
-		e.target.classList.contains("modal") ||
-		e.target.classList.contains("btn__cancel")
-	) {
-		document.body.append(form);
-	}
-}
-
-function showPhotoPreview(e) {
-	const file = e.target.files[0];
-	const reader = new FileReader();
-	reader.onload = (e) => {
-		if (file.name) {
-			const img = createImg(e);
-			preview.innerHTML = "";
-			preview.append(img);
-		}
-	};
-	reader.readAsDataURL(file);
-}
-function createImg(e) {
-	const img = document.createElement("img");
-	img.classList.add("photo-uploaded");
-	img.src = e.target.result;
-	img.alt = "Preview";
-
-	return img;
-}
-
-function clearPreview() {
-	const previewsPhoto = document.querySelector(".photo-uploaded");
-	if (previewsPhoto) {
-		previewsPhoto.remove();
-	}
-}
 
 //Form End----------
 
@@ -234,8 +260,11 @@ function removeModal(e) {
 	}
 	if (e.target.classList.contains("btn__cancel")) {
 		e.target.closest(".modal").remove();
-		e.stopPropagation();
 	}
+	if (e.target.classList.contains("form__form")) {
+		e.target.closest(".modal").remove();
+	}
+	e.stopPropagation();
 	document.body.style.overflow = "auto";
 }
 

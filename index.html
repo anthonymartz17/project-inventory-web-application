@@ -53,6 +53,7 @@
 						placeholder="Search..."
 					/>
 					<select name="sort" id="sort" class="control__sort">
+						<option value="">Select</option>
 						<option value="category">Category</option>
 						<option value="instock">InStock</option>
 						<option value="provider">Provider</option>
@@ -90,31 +91,92 @@
 			<form id="new-product" class="form__form">
 				<div class="form__input--container">
 					<label for="name">Name:</label>
-					<input type="text" id="name" name="name" class="form__input" />
+					<input
+						required
+						placeholder="Product Name"
+						type="text"
+						id="name"
+						name="name"
+						class="form__input"
+					/>
 				</div>
 				<div class="form__input--container">
 					<label for="name">Quantity:</label>
-					<input type="number" id="qty" name="quantity" class="form__input" />
+					<input
+						required
+						placeholder="Product quantity"
+						type="number"
+						id="qty"
+						name="qty"
+						class="form__input"
+					/>
 				</div>
-				<label for="provider">Provider:</label>
 				<div class="form__input--container">
+					<label for="provider">Provider:</label>
 					<select name="provider" id="provider" class="form__input">
 						<option value="">Select</option>
-						<option value="Amazon">Amazon</option>
-						<option value="Alibaba">Alibaba</option>
-						<option value="Apple">Nike</option>
-						<option value="Apple">Addidas</option>
+						<option value="AMAZON">Amazon</option>
+						<option value="ALIBABA">Alibaba</option>
+						<option value="NIKE">Nike</option>
+						<option value="ADDIDAS">Addidas</optioncant>
 					</select>
 				</div>
-				<div class="form__input--container">
+        <div class="form__input--container">
 					<label for="category">Category:</label>
-					<select name="provider" id="provider" class="form__input">
+					<select name="category" id="category" class="form__input">
 						<option value="">Select</option>
-						<option value="Amazon">Shoes</option>
-						<option value="Alibaba">Clothing</option>
-						<option value="Apple">Accesories</option>
+						<option value="SHOES">Shoes</option>
+						<option value="APPAREL">Apparel</option>
+						<option value="ACCESSORIES">Accesories</option>
 					</select>
 				</div>
+				<div class="form__input--container">
+					<label for="name">Brand:</label>
+					<input
+						required
+						placeholder="Product Brand"
+						type="text"
+						id="brand"
+						name="brand"
+						class="form__input"
+					/>
+				</div>
+				<div class="form__input--container">
+					<label for="name">Color:</label>
+					<input
+						required
+						placeholder="Product color"
+						type="text"
+						id="color"
+						name="color"
+						class="form__input"
+					/>
+				</div>
+				<div class="form__input--container">
+					<label for="name">Size:</label>
+					<input
+						required
+						placeholder="Product size"
+						type="text"
+						id="size"
+						name="size"
+						class="form__input"
+					/>
+				</div>
+				<div class="form__input--container">
+					<label for="name">Price:</label>
+					<input
+						required
+						placeholder="Product price"
+						type="number"
+						id="price"
+						name="price"
+						class="form__input"
+					/>
+				</div>
+
+			
+
 				<div class="form__input--container form__input--photo">
 					<input type="file" id="photo" accept="image/*" class="form__photo" />
 					<div id="preview" class="preview">
@@ -126,7 +188,9 @@
 					<button type="button" class="btn__secondary btn__cancel">
 						Cancel
 					</button>
-					<button class="btn__primary">Submit</button>
+					<button class="btn__primary">
+            Submit
+            </button>
 				</div>
 			</form>
 		</section>
