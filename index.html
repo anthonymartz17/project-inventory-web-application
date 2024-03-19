@@ -52,11 +52,23 @@
 						class="control__search"
 						placeholder="Search..."
 					/>
-					<select name="sort" id="sort" class="control__sort">
-						<option value="">Select</option>
-						<option value="category">Category</option>
-						<option value="instock">InStock</option>
-						<option value="provider">Provider</option>
+					<select name="sort" id="filters" class="control__sort">
+						<option value="">Filters</option>
+						<!-- <option value="provider">Provider</option> -->
+						<option value="" disabled>Category</option>
+					  <option value="SHOES">Shoes</option>
+                <option value="APPAREL">Apparel</option>
+                <option value="ACCESSORIES">Accesories</option>
+						<option value="" disabled>Provider</option>
+            <option value="AMAZON">Amazon</option>
+            <option value="ALIBABA">Alibaba</option>
+            <option value="NIKE">Nike</option>
+            <option value="ADIDAS">Adidas</optioncant>
+              <option value="" disabled>Others</option>
+						<option value="instock">In Stock</option>
+						<option value="outOfStock">Out of Stock</option>
+						<option value="priceLowHigh">Price Low - High</option>
+						<option value="priceHighLog">Price High - Low</option>
 					</select>
 					<button type="button" class="control__button--new btn__primary">
 						<i class="fa-solid fa-plus"></i> New Product
@@ -123,7 +135,7 @@
               <option value="AMAZON">Amazon</option>
               <option value="ALIBABA">Alibaba</option>
               <option value="NIKE">Nike</option>
-              <option value="ADDIDAS">Addidas</optioncant>
+              <option value="ADIDAS">Adidas</optioncant>
             </select>
           </div>
 

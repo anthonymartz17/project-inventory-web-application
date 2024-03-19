@@ -49,10 +49,18 @@ const categoryList = [
 	{ id: "ACC", name: "ACCESSORIES" },
 ];
 
+//Queries
+const filters = document.getElementById("filters");
+const tableBody = document.querySelector("#table-body");
+filters.addEventListener("change", applyFilter);
+
 //On Created___________
 window.addEventListener("load", () => {
 	if (inventoryList.length > 0) {
-		inventoryList.forEach((ele) => createTableItem(ele));
+		inventoryList.forEach((ele) => {
+			const tableRow = createTableItem(ele);
+			tableBody.append(tableRow);
+		});
 	} else {
 		const tableBody = document.getElementById("table-body");
 		tableBody.innerHTML = "No products added";
@@ -103,9 +111,57 @@ function closeActionCard() {
 	document.body.style.overflow = "auto";
 }
 
-// function sortBy(criteria) {
-//   const sorted =
-// }
+function applyFilter(e) {
+	let filtered = [];
+
+	switch (e.target.value) {
+		case "SHOES":
+			filtered = inventoryList.filter((ele) => ele.category === "SHOES");
+			break;
+		case "APPAREL":
+			filtered = inventoryList.filter((ele) => ele.category === "APPAREL");
+			break;
+		case "ACCESSORIES":
+			filtered = inventoryList.filter((ele) => ele.category === "ACCESSORIES");
+			break;
+		case "AMAZON":
+			filtered = inventoryList.filter((ele) => ele.provider === "AMAZON");
+
+			break;
+		case "ALIBABA":
+			filtered = inventoryList.filter((ele) => ele.provider === "ALIBABA");
+
+			break;
+		case "NIKE":
+			filtered = inventoryList.filter((ele) => ele.provider === "NIKE");
+			break;
+		case "ADIDAS":
+			filtered = inventoryList.filter((ele) => ele.provider === "ADIDAS");
+			break;
+		case "instock":
+			filtered = inventoryList.filter((ele) => ele.quantity_available > 0);
+
+			break;
+		case "outOfStock":
+			filtered = inventoryList.filter((ele) => ele.quantity_available === 0);
+			break;
+		case "priceLowHigh":
+			filtered = [...inventoryList].sort((a, b) => a.price - b.price);
+			break;
+		case "priceHighLog":
+			filtered = [...inventoryList].sort((a, b) => b.price - a.price);
+			break;
+
+		default:
+			filtered = inventoryList;
+	}
+
+	tableBody.innerHTML = "";
+	filtered.forEach((ele) => {
+		const tableRow = createTableItem(ele);
+		tableBody.append(tableRow);
+	});
+}
 
 function removeItem(e) {
 	// closeForm(e);
@@ -210,10 +266,12 @@ function handleSubmit(e) {
 	const product = getFormValues(e);
 	if (isEditMode) {
 		updateProduct(product, productId);
-	} else {
+  } else {
+    console.log(product,'handle')
 		product.id = generateId(product.provider, product.category);
 		inventoryList.push(product);
-		createTableItem(product);
+		const tableRow = createTableItem(product);
+		tableBody.append(tableRow);
 	}
 
 	closeForm(e);
@@ -235,6 +293,7 @@ function getFormValues(e) {
 	return product;
 }
 function generateId(provider, category) {
+  console.log(provider,category)
 	const prov = providerList.find((ele) => ele.name === provider);
 	const cat = categoryList.find((ele) => ele.name === category);
 	return `${inventoryList.length + 1}-${prov.id}-${cat.id}`;
@@ -324,9 +383,10 @@ function createTableItem(item) {
 	tableData.append(actionsCard);
 
 	tableRow.append(tableData);
+	return tableRow;
 
-	const tableBody = document.getElementById("table-body");
-	tableBody.append(tableRow);
+	// const tableBody = document.getElementById("table-body");
+	// tableBody.append(tableRow);
 }
 
 function removeProduct(id) {
