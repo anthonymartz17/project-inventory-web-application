@@ -50,6 +50,8 @@ const categoryList = [
 ];
 
 //Queries
+const searchBar = document.querySelector(".control__search");
+searchBar.addEventListener("keyup", searchItem);
 const filters = document.getElementById("filters");
 const tableBody = document.querySelector("#table-body");
 filters.addEventListener("change", applyFilter);
@@ -63,9 +65,10 @@ window.addEventListener("load", () => {
 		});
 	} else {
 		const tableBody = document.getElementById("table-body");
-		tableBody.innerHTML = "No products added";
+		tableBody.innerHTML = "";
+		tableBody.innerText = "No products added";
 		tableBody.style.textAlign = "center";
-		tableBody.style.paddingTop = "1em";
+		tableBody.style.paddingTop = "2em";
 	}
 });
 
@@ -156,18 +159,42 @@ function applyFilter(e) {
 			filtered = inventoryList;
 	}
 
-	tableBody.innerHTML = "";
-	filtered.forEach((ele) => {
-		const tableRow = createTableItem(ele);
-		tableBody.append(tableRow);
-	});
+	if (filtered.length === 0) {
+		tableBody.innerHTML = `No products found under ${e.target.value}`;
+		tableBody.style.textAlign = "center";
+		tableBody.style.paddingTop = "1em";
+	} else {
+		tableBody.innerHTML = "";
+		filtered.forEach((ele) => {
+			const tableRow = createTableItem(ele);
+			tableBody.append(tableRow);
+		});
+	}
 }
 
-function removeItem(e) {
-	// closeForm(e);
+function searchItem(e) {
+	const searchWord = e.target.value.toLowerCase();
+	tableBody.innerHTML = "";
+	const filteredList = inventoryList.filter((ele) =>
+		Object.values(ele).some((item) =>
+			String(item).toLocaleLowerCase().includes(searchWord)
+		)
+	);
+	if (filteredList.length === 0) {
+		tableBody.innerHTML = `No products found under - "${e.target.value}"`;
+		tableBody.style.textAlign = "center";
+		tableBody.style.paddingTop = "1em";
+	} else {
+		filteredList.forEach((ele) => {
+			const tableRow = createTableItem(ele);
+			tableBody.append(tableRow);
+		});
+	}
 }
 
 //Table End----------
+
+
 
 //Form Start----------
 
@@ -223,16 +250,6 @@ function setSelectedProductOnForm(data) {
 	document.getElementById("price").value = data.price;
 }
 
-// function keepFormAlive(e, form) {
-//   console.log('keep it alive')
-// 	if (
-// 		e.target.classList.contains("modal") ||
-// 		e.target.classList.contains("btn__cancel")
-// 	) {
-// 		document.body.append(form);
-// 	}
-// }
-
 function showPhotoPreview(e) {
 	const file = e.target.files[0];
 	const reader = new FileReader();
@@ -245,6 +262,7 @@ function showPhotoPreview(e) {
 	};
 	reader.readAsDataURL(file);
 }
+
 function createImg(e) {
 	const img = document.createElement("img");
 	img.classList.add("photo-uploaded");
@@ -266,8 +284,8 @@ function handleSubmit(e) {
 	const product = getFormValues(e);
 	if (isEditMode) {
 		updateProduct(product, productId);
-  } else {
-    console.log(product,'handle')
+	} else {
+		console.log(product, "handle");
 		product.id = generateId(product.provider, product.category);
 		inventoryList.push(product);
 		const tableRow = createTableItem(product);
@@ -292,12 +310,14 @@ function getFormValues(e) {
 	};
 	return product;
 }
+
 function generateId(provider, category) {
-  console.log(provider,category)
+	console.log(provider, category);
 	const prov = providerList.find((ele) => ele.name === provider);
 	const cat = categoryList.find((ele) => ele.name === category);
 	return `${inventoryList.length + 1}-${prov.id}-${cat.id}`;
 }
+
 function updateProduct(product, id) {
 	const productToUpdate = inventoryList.find((ele) => ele.id === id);
 	Object.assign(productToUpdate, product);
@@ -384,9 +404,6 @@ function createTableItem(item) {
 
 	tableRow.append(tableData);
 	return tableRow;
-
-	// const tableBody = document.getElementById("table-body");
-	// tableBody.append(tableRow);
 }
 
 function removeProduct(id) {
@@ -394,7 +411,7 @@ function removeProduct(id) {
 	inventoryList = inventoryList.filter((ele) => ele.id !== id);
 	document.getElementById(id).remove();
 	if (inventoryList.length === 0) {
-		const tableBody = document.getElementById("table-body");
+		// const tableBody = document.getElementById("table-body");
 		tableBody.innerHTML = "No products added";
 		tableBody.style.textAlign = "center";
 		tableBody.style.paddingTop = "1em";

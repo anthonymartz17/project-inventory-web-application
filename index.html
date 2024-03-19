@@ -53,29 +53,32 @@
 						placeholder="Search..."
 					/>
 					<select name="sort" id="filters" class="control__sort">
-						<option value="">Filters</option>
-						<!-- <option value="provider">Provider</option> -->
-						<option value="" disabled>Category</option>
-					  <option value="SHOES">Shoes</option>
-                <option value="APPAREL">Apparel</option>
-                <option value="ACCESSORIES">Accesories</option>
-						<option value="" disabled>Provider</option>
-            <option value="AMAZON">Amazon</option>
-            <option value="ALIBABA">Alibaba</option>
-            <option value="NIKE">Nike</option>
-            <option value="ADIDAS">Adidas</optioncant>
-              <option value="" disabled>Others</option>
-						<option value="instock">In Stock</option>
-						<option value="outOfStock">Out of Stock</option>
-						<option value="priceLowHigh">Price Low - High</option>
-						<option value="priceHighLog">Price High - Low</option>
+						<option value="">-- Filters --</option>
+            <optgroup label="Category">
+              <option value="SHOES">Shoes</option>
+              <option value="APPAREL">Apparel</option>
+              <option value="ACCESSORIES">Accesories</option>
+            </optgroup>
+            <optgroup label="Provider">
+              <option value="AMAZON">Amazon</option>
+              <option value="ALIBABA">Alibaba</option>
+              <option value="NIKE">Nike</option>
+              <option value="ADIDAS">Adidas</optioncant>
+            </optgroup>
+            <optgroup label="Others">
+
+              <option value="instock">In Stock</option>
+              <option value="outOfStock">Out of Stock</option>
+              <option value="priceLowHigh">Price Low - High</option>
+              <option value="priceHighLog">Price High - Low</option>            
+            </optgroup>	
 					</select>
 					<button type="button" class="control__button--new btn__primary">
 						<i class="fa-solid fa-plus"></i> New Product
 					</button>
 				</div>
 				<div class="table__container card">
-					<table>
+					<table class="table">
 						<thead>
 							<tr class="table__row table__row--header">
 								<th>ID</th>
