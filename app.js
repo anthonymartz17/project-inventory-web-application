@@ -1,4 +1,6 @@
 //State
+isEditMode = false;
+productId = null;
 const inventoryList = [
 	{
 		id: "1-AMZ-APP",
@@ -9,6 +11,7 @@ const inventoryList = [
 		size: "Medium",
 		price: 29.99,
 		quantity_available: 100,
+		category: "APPAREL",
 	},
 	{
 		id: "2-NK-SHO",
@@ -19,6 +22,7 @@ const inventoryList = [
 		size: "8",
 		price: 59.99,
 		quantity_available: 50,
+		category: "SHOES",
 	},
 	{
 		id: "3-ADI-ACC",
@@ -29,6 +33,7 @@ const inventoryList = [
 		size: "Universal",
 		price: 39.99,
 		quantity_available: 200,
+		category: "ACCESSORIES",
 	},
 ];
 
@@ -81,6 +86,7 @@ function toggleMobileMenu() {
 // actionBtn.forEach((ele) => ele.addEventListener("click", showActionsCard));
 
 function showActionsCard(e) {
+	console.log(e);
 	e.target.nextElementSibling.classList.toggle("show-actions");
 	const modal = getModal();
 	modal.addEventListener("click", () => {
@@ -89,11 +95,11 @@ function showActionsCard(e) {
 }
 
 // function sortBy(criteria) {
-//   const sorted = 
+//   const sorted =
 // }
 
 function removeItem(e) {
-	removeModal(e);
+	// removeModal(e);
 }
 
 //Table End----------
@@ -108,7 +114,13 @@ const photoUpload = document.getElementById("photo");
 photoUpload.addEventListener("change", showPhotoPreview);
 const preview = document.getElementById("preview");
 
-function showForm(e) {
+function showForm(e, id) {
+	if (id) {
+		isEditMode = true;
+		productId = id;
+		const product = inventoryList.find((ele) => ele.id === id);
+		setSelectedProductOnForm(product);
+	}
 	const modal = getModal();
 	modal.style.background = "rgba(0, 0, 0, 0.661)";
 	const form = document.querySelector(".form__card");
@@ -118,6 +130,17 @@ function showForm(e) {
 	cancelBtn.addEventListener("click", (e) => keepFormAlive(e, form));
 	modal.addEventListener("click", (e) => keepFormAlive(e, form));
 	modal.append(form);
+}
+
+function setSelectedProductOnForm(data) {
+	document.getElementById("name").value = data.name;
+	document.getElementById("qty").value = data.quantity_available;
+	document.getElementById("provider").value = data.provider;
+	document.getElementById("category").value = data.category;
+	document.getElementById("brand").value = data.brand;
+	document.getElementById("color").value = data.color;
+	document.getElementById("size").value = data.size;
+	document.getElementById("price").value = data.price;
 }
 function keepFormAlive(e, form) {
 	if (
@@ -158,8 +181,24 @@ function clearPreview() {
 
 function handleSubmit(e) {
 	e.preventDefault();
+	const product = getFormValues(e);
+
+	if (isEditMode) {
+		updateProduct(product, productId);
+	} else {
+		product.id = generateId(product.provider, product.category);
+    inventoryList.push(product);
+    createTableItem(product);
+	}
+
+	form.reset();
+	removeModal(e);
+	isEditMode = false;
+	productId = null;
+}
+
+function getFormValues(e) {
 	const product = {
-		id: generateId(e.target.provider.value, e.target.category.value),
 		provider: e.target.provider.value,
 		category: e.target.category.value,
 		name: e.target.name.value,
@@ -168,17 +207,18 @@ function handleSubmit(e) {
 		size: e.target.size.value,
 		price: e.target.price.value,
 		quantity_available: e.target.qty.value,
-	};
-
-	inventoryList.push(product);
-	createTableItem(product);
-	form.reset();
-	removeModal(e);
+  };
+  return product
 }
 function generateId(provider, category) {
 	const prov = providerList.find((ele) => ele.name === provider);
 	const cat = categoryList.find((ele) => ele.name === category);
 	return `${inventoryList.length + 1}-${prov.id}-${cat.id}`;
+}
+function updateProduct(product, id) {
+  const productToUpdate = inventoryList.find(ele => ele.id === id)
+  Object.assign(productToUpdate,product)
+  createTableItem(productToUpdate);
 }
 
 function createTableItem(item) {
@@ -238,7 +278,6 @@ function createTableItem(item) {
 	tableBody.append(tableRow);
 }
 
-
 //Form End----------
 
 //Reusables Start----------
@@ -266,6 +305,8 @@ function removeModal(e) {
 	}
 	e.stopPropagation();
 	document.body.style.overflow = "auto";
+	isEditMode = false;
+	productId = null;
 }
 
 //Reusable End----------
