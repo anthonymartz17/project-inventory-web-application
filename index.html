@@ -87,95 +87,112 @@
 				<small> All rights reserved.</small>
 			</footer>
 		</main>
-		<section class="form__card card">
-			<form id="new-product" class="form__form">
-				<div class="form__input--container">
-					<label for="name">Name:</label>
-					<input
-						required
-						placeholder="Product Name"
-						type="text"
-						id="name"
-						name="name"
-						class="form__input"
-					/>
-				</div>
-				<div class="form__input--container">
-					<label for="name">Quantity:</label>
-					<input
-						required
-						placeholder="Product quantity"
-						type="number"
-						id="qty"
-						name="qty"
-						class="form__input"
-					/>
-				</div>
-				<div class="form__input--container">
-					<label for="provider">Provider:</label>
-					<select name="provider" id="provider" class="form__input">
-						<option value="">Select</option>
-						<option value="AMAZON">Amazon</option>
-						<option value="ALIBABA">Alibaba</option>
-						<option value="NIKE">Nike</option>
-						<option value="ADDIDAS">Addidas</optioncant>
-					</select>
-				</div>
-        <div class="form__input--container">
-					<label for="category">Category:</label>
-					<select name="category" id="category" class="form__input">
-						<option value="">Select</option>
-						<option value="SHOES">Shoes</option>
-						<option value="APPAREL">Apparel</option>
-						<option value="ACCESSORIES">Accesories</option>
-					</select>
-				</div>
-				<div class="form__input--container">
-					<label for="name">Brand:</label>
-					<input
-						required
-						placeholder="Product Brand"
-						type="text"
-						id="brand"
-						name="brand"
-						class="form__input"
-					/>
-				</div>
-				<div class="form__input--container">
-					<label for="name">Color:</label>
-					<input
-						required
-						placeholder="Product color"
-						type="text"
-						id="color"
-						name="color"
-						class="form__input"
-					/>
-				</div>
-				<div class="form__input--container">
-					<label for="name">Size:</label>
-					<input
-						required
-						placeholder="Product size"
-						type="text"
-						id="size"
-						name="size"
-						class="form__input"
-					/>
-				</div>
-				<div class="form__input--container">
-					<label for="name">Price:</label>
-					<input
-						required
-						placeholder="Product price"
-						type="number"
-						id="price"
-						name="price"
-						class="form__input"
-					/>
-				</div>
+		<div class="form__modal">
+			<form id="new-product" class="form__form form__card card">
+        <div class="form__row">
 
-			
+
+          <div class="form__input--container">
+            <label for="name">Name:</label>
+            <input
+              required
+              placeholder="Product Name"
+              type="text"
+              id="name"
+              name="name"
+              class="form__input"
+            />
+          </div>
+          <div class="form__input--container">
+            <label for="name">Quantity:</label>
+            <input
+              required
+              placeholder="Product quantity"
+              type="number"
+              id="qty"
+              name="qty"
+              class="form__input"
+            />
+          </div>
+        </div>
+        <div class="form__row">
+          <div class="form__input--container">
+            <label for="provider">Provider:</label>
+            <select name="provider" id="provider" class="form__input">
+              <option value="">Select</option>
+              <option value="AMAZON">Amazon</option>
+              <option value="ALIBABA">Alibaba</option>
+              <option value="NIKE">Nike</option>
+              <option value="ADDIDAS">Addidas</optioncant>
+            </select>
+          </div>
+
+            <div class="form__input--container">
+              <label for="category">Category:</label>
+              <select name="category" id="category" class="form__input">
+                <option value="">Select</option>
+                <option value="SHOES">Shoes</option>
+                <option value="APPAREL">Apparel</option>
+                <option value="ACCESSORIES">Accesories</option>
+              </select>
+            </div>
+        
+        </div>
+          <div class="form__row">
+
+          
+            <div class="form__input--container">
+              <label for="name">Brand:</label>
+              <input
+                required
+                placeholder="Product Brand"
+                type="text"
+                id="brand"
+                name="brand"
+                class="form__input"
+              />
+            </div>
+          
+          <div class="form__input--container">
+            <label for="name">Color:</label>
+            <input
+              required
+              placeholder="Product color"
+              type="text"
+              id="color"
+              name="color"
+              class="form__input"
+            />
+          </div>
+          </div>
+
+          <div class="form__row">
+
+        
+            <div class="form__input--container">
+              <label for="name">Size:</label>
+              <input
+                required
+                placeholder="Product size"
+                type="text"
+                id="size"
+                name="size"
+                class="form__input"
+              />
+            </div>
+            <div class="form__input--container">
+              <label for="name">Price:</label>
+              <input
+                required
+                placeholder="Product price"
+                type="number"
+                id="price"
+                name="price"
+                class="form__input"
+              />
+            </div>
+          </div>
+
 
 				<div class="form__input--container form__input--photo">
 					<input type="file" id="photo" accept="image/*" class="form__photo" />
@@ -188,11 +205,11 @@
 					<button type="button" class="btn__secondary btn__cancel">
 						Cancel
 					</button>
-					<button class="btn__primary">
+					<button class="btn__primary btn__submit">
             Submit
             </button>
 				</div>
 			</form>
-		</section>
+		</div>
 	</body>
 </html>

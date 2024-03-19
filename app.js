@@ -28,7 +28,7 @@ const inventoryList = [
 		id: "3-ADI-ACC",
 		provider: "ALIBABA",
 		name: "Leather Wallet",
-		brand: "Addidas",
+		brand: "Adidas",
 		color: "Brown",
 		size: "Universal",
 		price: 39.99,
@@ -41,7 +41,7 @@ const providerList = [
 	{ id: "AMZ", name: "AMAZON" },
 	{ id: "ALB", name: "ALIBABA" },
 	{ id: "NK", name: "NIKE" },
-	{ id: "ADI", name: "ADDIDAS" },
+	{ id: "ADI", name: "ADIDAS" },
 ];
 const categoryList = [
 	{ id: "SHO", name: "SHOES" },
@@ -82,16 +82,23 @@ function toggleMobileMenu() {
 
 //Table Start----------
 
-// const actionBtn = document.querySelectorAll(".actions-btn");
-// actionBtn.forEach((ele) => ele.addEventListener("click", showActionsCard));
-
 function showActionsCard(e) {
-	console.log(e);
 	e.target.nextElementSibling.classList.toggle("show-actions");
 	const modal = getModal();
-	modal.addEventListener("click", () => {
-		e.target.nextElementSibling.classList.toggle("show-actions");
-	});
+	modal.addEventListener("click", closeActionCard);
+}
+function getModal() {
+	const modal = document.createElement("div");
+	modal.classList.add("modal");
+	document.body.prepend(modal);
+	document.body.style.overflow = "hidden";
+	return modal;
+}
+
+function closeActionCard() {
+	document.querySelector(".modal").remove();
+	document.querySelector(".show-actions").classList.toggle("show-actions");
+	document.body.style.overflow = "auto";
 }
 
 // function sortBy(criteria) {
@@ -99,7 +106,7 @@ function showActionsCard(e) {
 // }
 
 function removeItem(e) {
-	// removeModal(e);
+	// closeForm(e);
 }
 
 //Table End----------
@@ -121,18 +128,32 @@ function showForm(e, id) {
 		const product = inventoryList.find((ele) => ele.id === id);
 		setSelectedProductOnForm(product);
 	}
-	const modal = getModal();
-	modal.style.background = "rgba(0, 0, 0, 0.661)";
-	const form = document.querySelector(".form__card");
-	form.style.display = "block";
+
+	document.body.style.overflow = "hidden";
+	const form = document.querySelector(".form__modal");
+	// form.addEventListener("click", closeForm);
+	form.style.display = "flex";
 	const cancelBtn = document.querySelector(".btn__cancel");
-	cancelBtn.addEventListener("click", removeModal);
-	cancelBtn.addEventListener("click", (e) => keepFormAlive(e, form));
-	modal.addEventListener("click", (e) => keepFormAlive(e, form));
-	modal.append(form);
+	cancelBtn.addEventListener("click", closeForm);
+}
+
+function closeForm(e) {
+	const classList = ["form__modal", "btn__cancel", "form__card", "btn__submit"];
+	console.log(e.target.classList, "firing");
+	if (classList.some((ele) => e.target.classList.contains(ele))) {
+		console.log(e, "entre");
+		e.target.closest(".form__modal").style.display = "none";
+		document.body.style.overflow = "auto";
+		form.reset();
+		e.stopPropagation();
+	}
+
+	// isEditMode = false;
+	// productId = null;
 }
 
 function setSelectedProductOnForm(data) {
+	console.log(document.getElementById("name"));
 	document.getElementById("name").value = data.name;
 	document.getElementById("qty").value = data.quantity_available;
 	document.getElementById("provider").value = data.provider;
@@ -142,14 +163,16 @@ function setSelectedProductOnForm(data) {
 	document.getElementById("size").value = data.size;
 	document.getElementById("price").value = data.price;
 }
-function keepFormAlive(e, form) {
-	if (
-		e.target.classList.contains("modal") ||
-		e.target.classList.contains("btn__cancel")
-	) {
-		document.body.append(form);
-	}
-}
+
+// function keepFormAlive(e, form) {
+//   console.log('keep it alive')
+// 	if (
+// 		e.target.classList.contains("modal") ||
+// 		e.target.classList.contains("btn__cancel")
+// 	) {
+// 		document.body.append(form);
+// 	}
+// }
 
 function showPhotoPreview(e) {
 	const file = e.target.files[0];
@@ -182,17 +205,15 @@ function clearPreview() {
 function handleSubmit(e) {
 	e.preventDefault();
 	const product = getFormValues(e);
-
 	if (isEditMode) {
 		updateProduct(product, productId);
 	} else {
 		product.id = generateId(product.provider, product.category);
-    inventoryList.push(product);
-    createTableItem(product);
+		inventoryList.push(product);
+		createTableItem(product);
 	}
 
-	form.reset();
-	removeModal(e);
+	closeForm(e);
 	isEditMode = false;
 	productId = null;
 }
@@ -207,8 +228,8 @@ function getFormValues(e) {
 		size: e.target.size.value,
 		price: e.target.price.value,
 		quantity_available: e.target.qty.value,
-  };
-  return product
+	};
+	return product;
 }
 function generateId(provider, category) {
 	const prov = providerList.find((ele) => ele.name === provider);
@@ -216,28 +237,50 @@ function generateId(provider, category) {
 	return `${inventoryList.length + 1}-${prov.id}-${cat.id}`;
 }
 function updateProduct(product, id) {
-  const productToUpdate = inventoryList.find(ele => ele.id === id)
-  Object.assign(productToUpdate,product)
-  createTableItem(productToUpdate);
+	const productToUpdate = inventoryList.find((ele) => ele.id === id);
+	Object.assign(productToUpdate, product);
+	updateDom(productToUpdate);
+}
+
+function updateDom(product) {
+	const row = document.getElementById(product.id);
+	row.querySelector("#td_name").innerText = product.name;
+	row.querySelector("#td_brand").innerText = product.brand;
+	row.querySelector("#td_provider").innerText = product.provider;
+	row.querySelector("#td_price").innerText = product.price;
+	row.querySelector("#td_quantity_available").innerText =
+		product.quantity_available;
+	row.querySelector("#td_status").innerText =
+		product.quantity_available > 0 ? "In Stock" : "Out of Stock";
 }
 
 function createTableItem(item) {
 	const itemList = [
-		item.id,
-		item.name,
-		item.brand,
-		item.provider,
-		item.quantity_available,
-		item.price,
-		item.quantity_available > 0 ? "In Stock" : "Out of Stock",
+		{ innerText: item.id },
+		{ innerText: item.name, tableData_id: "td_name" },
+		{ innerText: item.brand, tableData_id: "td_brand" },
+		{ innerText: item.provider, tableData_id: "td_provider" },
+		{
+			innerText: item.quantity_available,
+			tableData_id: "td_quantity_available",
+		},
+		{ innerText: item.price, tableData_id: "td_price" },
+		{
+			innerText: item.quantity_available > 0 ? "In Stock" : "Out of Stock",
+			tableData_id: "td_status",
+		},
 	];
 
 	const tableRow = document.createElement("tr");
 	tableRow.classList.add("table__row", "table__row--body");
+	tableRow.id = item.id;
 
 	itemList.forEach((ele) => {
 		const tableData = document.createElement("td");
-		tableData.innerText = ele;
+		tableData.innerText = ele.innerText;
+		if (ele.tableData_id) {
+			tableData.id = ele.tableData_id;
+		}
 		tableRow.append(tableData);
 	});
 
@@ -254,6 +297,7 @@ function createTableItem(item) {
 	const editBtn = document.createElement("p");
 	editBtn.classList.add("actions__items");
 	editBtn.addEventListener("click", (e) => showForm(e, item.id));
+	editBtn.addEventListener("click", closeActionCard);
 	const editIcon = document.createElement("i");
 	editIcon.classList.add("fa-regular", "fa-pen-to-square");
 	editBtn.append(editIcon);
@@ -261,7 +305,8 @@ function createTableItem(item) {
 
 	const delBtn = document.createElement("p");
 	delBtn.classList.add("actions__items");
-	delBtn.addEventListener("click", (e) => showForm(e, item.id));
+	// delBtn.addEventListener("click", (e) => showForm(e, item.id));
+	delBtn.addEventListener("click", closeActionCard);
 	const delIcon = document.createElement("i");
 	delIcon.classList.add("fa-solid", "fa-trash-can");
 	delBtn.append(delIcon);
@@ -279,34 +324,3 @@ function createTableItem(item) {
 }
 
 //Form End----------
-
-//Reusables Start----------
-
-function getModal() {
-	const modal = document.createElement("div");
-	modal.classList.add("modal");
-	document.body.prepend(modal);
-	document.body.style.overflow = "hidden";
-	modal.addEventListener("click", (e) => {
-		removeModal(e);
-	});
-	return modal;
-}
-
-function removeModal(e) {
-	if (e.target.classList.contains("modal")) {
-		e.target.remove();
-	}
-	if (e.target.classList.contains("btn__cancel")) {
-		e.target.closest(".modal").remove();
-	}
-	if (e.target.classList.contains("form__form")) {
-		e.target.closest(".modal").remove();
-	}
-	e.stopPropagation();
-	document.body.style.overflow = "auto";
-	isEditMode = false;
-	productId = null;
-}
-
-//Reusable End----------
