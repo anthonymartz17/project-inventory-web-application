@@ -1,7 +1,7 @@
 //State
 isEditMode = false;
 productId = null;
-const inventoryList = [
+let inventoryList = [
 	{
 		id: "1-AMZ-APP",
 		provider: "AMAZON",
@@ -56,6 +56,8 @@ window.addEventListener("load", () => {
 	} else {
 		const tableBody = document.getElementById("table-body");
 		tableBody.innerHTML = "No products added";
+		tableBody.style.textAlign = "center";
+		tableBody.style.paddingTop = "1em";
 	}
 });
 
@@ -122,6 +124,7 @@ photoUpload.addEventListener("change", showPhotoPreview);
 const preview = document.getElementById("preview");
 
 function showForm(e, id) {
+	console.log("klk");
 	if (id) {
 		isEditMode = true;
 		productId = id;
@@ -139,7 +142,7 @@ function showForm(e, id) {
 
 function closeForm(e) {
 	const classList = ["form__modal", "btn__cancel", "form__card", "btn__submit"];
-	console.log(e.target.classList, "firing");
+
 	if (classList.some((ele) => e.target.classList.contains(ele))) {
 		console.log(e, "entre");
 		e.target.closest(".form__modal").style.display = "none";
@@ -307,6 +310,9 @@ function createTableItem(item) {
 	delBtn.classList.add("actions__items");
 	// delBtn.addEventListener("click", (e) => showForm(e, item.id));
 	delBtn.addEventListener("click", closeActionCard);
+	delBtn.addEventListener("click", (e) =>
+		removeProduct(e.target.closest(".table__row").id)
+	);
 	const delIcon = document.createElement("i");
 	delIcon.classList.add("fa-solid", "fa-trash-can");
 	delBtn.append(delIcon);
@@ -323,4 +329,16 @@ function createTableItem(item) {
 	tableBody.append(tableRow);
 }
 
+function removeProduct(id) {
+	console.log(id, "k hay");
+	inventoryList = inventoryList.filter((ele) => ele.id !== id);
+	document.getElementById(id).remove();
+	if (inventoryList.length === 0) {
+		const tableBody = document.getElementById("table-body");
+		tableBody.innerHTML = "No products added";
+		tableBody.style.textAlign = "center";
+		tableBody.style.paddingTop = "1em";
+	}
+	console.log(inventoryList, "inventoryList");
+}
 //Form End----------
