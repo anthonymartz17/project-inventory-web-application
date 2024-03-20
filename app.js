@@ -58,6 +58,10 @@ filters.addEventListener("change", applyFilter);
 
 //On Created___________
 window.addEventListener("load", () => {
+	const year = document.getElementById("current-year");
+	const currentYear = new Date();
+	year.append(currentYear.getFullYear());
+
 	if (inventoryList.length > 0) {
 		inventoryList.forEach((ele) => {
 			const tableRow = createTableItem(ele);
@@ -96,6 +100,10 @@ function toggleMobileMenu() {
 //Table Start----------
 
 function showActionsCard(e) {
+	const lastRow = tableBody.childNodes[tableBody.childNodes.length - 1];
+	const lastRowActionCard = lastRow.querySelector(".actions");
+	lastRowActionCard.style.top = "-50px";
+
 	e.target.nextElementSibling.classList.toggle("show-actions");
 	const modal = getModal();
 	modal.addEventListener("click", closeActionCard);
@@ -193,8 +201,6 @@ function searchItem(e) {
 }
 
 //Table End----------
-
-
 
 //Form Start----------
 
