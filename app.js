@@ -1,6 +1,8 @@
 //State
-isEditMode = false;
-productId = null;
+
+let isEditMode = false;
+let productId = null;
+const newProduct = {};
 let inventoryList = [
 	{
 		id: "1-AMZ-APP",
@@ -12,6 +14,7 @@ let inventoryList = [
 		price: 29.99,
 		quantity_available: 100,
 		category: "APPAREL",
+		img: "./assets/Screenshot 2024-03-20 at 8.55.49 PM.png",
 	},
 	{
 		id: "2-NK-SHO",
@@ -23,6 +26,7 @@ let inventoryList = [
 		price: 59.99,
 		quantity_available: 50,
 		category: "SHOES",
+		img: "./assets/Screenshot 2024-03-20 at 8.57.10 PM.png",
 	},
 	{
 		id: "3-ADI-ACC",
@@ -34,6 +38,7 @@ let inventoryList = [
 		price: 39.99,
 		quantity_available: 200,
 		category: "ACCESSORIES",
+		img: "./assets/Screenshot 2024-03-20 at 8.58.56 PM.png",
 	},
 ];
 
@@ -64,6 +69,8 @@ window.addEventListener("load", () => {
 
 	if (inventoryList.length > 0) {
 		inventoryList.forEach((ele) => {
+			if (ele.img) {
+			}
 			const tableRow = createTableItem(ele);
 			tableBody.append(tableRow);
 		});
@@ -209,11 +216,14 @@ const form = document.querySelector(".form__form");
 form.addEventListener("submit", handleSubmit);
 newProductBtn.addEventListener("click", showForm);
 const photoUpload = document.getElementById("photo");
-photoUpload.addEventListener("change", showPhotoPreview);
 const preview = document.getElementById("preview");
+photoUpload.addEventListener("change", (e) => {
+	const file = e.target.files[0];
+	const appendTo = preview;
+	return showPhotoPreview(file, appendTo);
+});
 
 function showForm(e, id) {
-	console.log("klk");
 	if (id) {
 		isEditMode = true;
 		productId = id;
@@ -256,23 +266,24 @@ function setSelectedProductOnForm(data) {
 	document.getElementById("price").value = data.price;
 }
 
-function showPhotoPreview(e) {
-	const file = e.target.files[0];
+function showPhotoPreview(file, appendTo) {
 	const reader = new FileReader();
 	reader.onload = (e) => {
+		newProduct.file = file;
 		if (file.name) {
-			const img = createImg(e);
-			preview.innerHTML = "";
-			preview.append(img);
+			const img = createImg(e.target.result);
+			appendTo.innerHTML = "";
+			appendTo.append(img);
 		}
+		console.log(newProduct.file);
 	};
 	reader.readAsDataURL(file);
 }
 
-function createImg(e) {
+function createImg(imgSrc) {
 	const img = document.createElement("img");
 	img.classList.add("photo-uploaded");
-	img.src = e.target.result;
+	img.src = imgSrc;
 	img.alt = "Preview";
 
 	return img;
@@ -304,17 +315,16 @@ function handleSubmit(e) {
 }
 
 function getFormValues(e) {
-	const product = {
-		provider: e.target.provider.value,
-		category: e.target.category.value,
-		name: e.target.name.value,
-		brand: e.target.brand.value,
-		color: e.target.color.value,
-		size: e.target.size.value,
-		price: e.target.price.value,
-		quantity_available: e.target.qty.value,
-	};
-	return product;
+	newProduct.provider = e.target.provider.value;
+	newProduct.category = e.target.category.value;
+	newProduct.name = e.target.name.value;
+	newProduct.brand = e.target.brand.value;
+	newProduct.color = e.target.color.value;
+	newProduct.size = e.target.size.value;
+	newProduct.price = e.target.price.value;
+	newProduct.quantity_available = e.target.qty.value;
+	console.log(newProduct);
+	return newProduct;
 }
 
 function generateId(provider, category) {
@@ -362,6 +372,15 @@ function createTableItem(item) {
 	const tableRow = document.createElement("tr");
 	tableRow.classList.add("table__row", "table__row--body");
 	tableRow.id = item.id;
+	const tdImg = document.createElement("td");
+	tdImg.id = "td_img";
+	if (item.file) {
+		showPhotoPreview(item.file, tdImg);
+	} else {
+		const img = createImg(item.img);
+		tdImg.append(img);
+	}
+	tableRow.append(tdImg);
 
 	itemList.forEach((ele) => {
 		const tableData = document.createElement("td");
