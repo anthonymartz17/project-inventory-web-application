@@ -78,7 +78,7 @@ header {
 	width: 100%;
 }
 
-.menu-bars {
+#menu-bars {
 	font-size: 2em;
 	cursor: pointer;
 }
@@ -372,7 +372,7 @@ footer small {
 /* Media queries Start */
 
 @media (min-width: 768px) {
-	.menu-bars {
+	#menu-bars {
 		display: none;
 	}
 
