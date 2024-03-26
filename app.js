@@ -233,7 +233,7 @@ function showForm(e, id) {
 
 	document.body.style.overflow = "hidden";
 	const form = document.querySelector(".form__modal");
-	// form.addEventListener("click", closeForm);
+
 	form.style.display = "flex";
 	const cancelBtn = document.querySelector(".btn__cancel");
 	cancelBtn.addEventListener("click", closeForm);
@@ -250,12 +250,10 @@ function closeForm(e) {
 		e.stopPropagation();
 	}
 
-	// isEditMode = false;
-	// productId = null;
 }
 
 function setSelectedProductOnForm(data) {
-	console.log(document.getElementById("name"));
+
 	document.getElementById("name").value = data.name;
 	document.getElementById("qty").value = data.quantity_available;
 	document.getElementById("provider").value = data.provider;
@@ -302,7 +300,7 @@ function handleSubmit(e) {
 	if (isEditMode) {
 		updateProduct(product, productId);
 	} else {
-		console.log(product, "handle");
+	
 		product.id = generateId(product.provider, product.category);
 		inventoryList.push(product);
 		const tableRow = createTableItem(product);
@@ -323,7 +321,7 @@ function getFormValues(e) {
 	newProduct.size = e.target.size.value;
 	newProduct.price = e.target.price.value;
 	newProduct.quantity_available = e.target.qty.value;
-	console.log(newProduct);
+	
 	return newProduct;
 }
 
@@ -412,7 +410,6 @@ function createTableItem(item) {
 
 	const delBtn = document.createElement("p");
 	delBtn.classList.add("actions__items");
-	// delBtn.addEventListener("click", (e) => showForm(e, item.id));
 	delBtn.addEventListener("click", closeActionCard);
 	delBtn.addEventListener("click", (e) =>
 		removeProduct(e.target.closest(".table__row").id)
@@ -436,7 +433,6 @@ function removeProduct(id) {
 	inventoryList = inventoryList.filter((ele) => ele.id !== id);
 	document.getElementById(id).remove();
 	if (inventoryList.length === 0) {
-		// const tableBody = document.getElementById("table-body");
 		tableBody.innerHTML = "No products added";
 		tableBody.style.textAlign = "center";
 		tableBody.style.paddingTop = "1em";
