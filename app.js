@@ -221,7 +221,6 @@ photoUpload.addEventListener("change", (e) => {
 	const file = e.target.files[0];
 	const appendTo = preview;
 	return showPhotoPreview(file, appendTo);
-
 });
 
 function showForm(e, id) {
@@ -333,13 +332,13 @@ function getFormValues(e) {
 }
 
 function generateId(provider, category) {
-
 	const prov = providerList.find((ele) => ele.name === provider);
 	const cat = categoryList.find((ele) => ele.name === category);
 	return `${inventoryList.length + 1}-${prov.id}-${cat.id}`;
 }
 
 function updateProduct(product, id) {
+
 	const productToUpdate = inventoryList.find((ele) => ele.id === id);
 	Object.assign(productToUpdate, product);
 	updateDom(productToUpdate);
@@ -355,6 +354,14 @@ function updateDom(product) {
 		product.quantity_available;
 	row.querySelector("#td_status").innerText =
 		product.quantity_available > 0 ? "In Stock" : "Out of Stock";
+	const imgEle = row.querySelector("#td_img");
+	if (product.file) {
+		showPhotoPreview(product.file, imgEle);
+	} else {
+		const img = createImg(product.img);
+		imgEle.innerHTML = "";
+		imgEle.append(img);
+	}
 }
 
 function createTableItem(item) {
