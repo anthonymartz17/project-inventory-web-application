@@ -345,6 +345,7 @@ function updateProduct(product, id) {
 }
 
 function updateDom(product) {
+	console.log(product,'both vals')
 	const row = document.getElementById(product.id);
 	row.querySelector("#td_name").innerText = product.name;
 	row.querySelector("#td_brand").innerText = product.brand;
@@ -356,6 +357,7 @@ function updateDom(product) {
 		product.quantity_available > 0 ? "In Stock" : "Out of Stock";
 	const imgEle = row.querySelector("#td_img");
 	if (product.file) {
+		delete product.img
 		showPhotoPreview(product.file, imgEle);
 	} else {
 		const img = createImg(product.img);
