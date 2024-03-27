@@ -221,6 +221,7 @@ photoUpload.addEventListener("change", (e) => {
 	const file = e.target.files[0];
 	const appendTo = preview;
 	return showPhotoPreview(file, appendTo);
+
 });
 
 function showForm(e, id) {
@@ -243,17 +244,18 @@ function closeForm(e) {
 	const classList = ["form__modal", "btn__cancel", "form__card", "btn__submit"];
 
 	if (classList.some((ele) => e.target.classList.contains(ele))) {
-		console.log(e, "entre");
 		e.target.closest(".form__modal").style.display = "none";
 		document.body.style.overflow = "auto";
 		form.reset();
+		preview.innerHTML = `
+		<i class="fa-solid fa-file-arrow-up upload-icon"></i>
+		<span style="display: block">Upload File</span>
+		`;
 		e.stopPropagation();
 	}
-
 }
 
 function setSelectedProductOnForm(data) {
-
 	document.getElementById("name").value = data.name;
 	document.getElementById("qty").value = data.quantity_available;
 	document.getElementById("provider").value = data.provider;
@@ -262,6 +264,13 @@ function setSelectedProductOnForm(data) {
 	document.getElementById("color").value = data.color;
 	document.getElementById("size").value = data.size;
 	document.getElementById("price").value = data.price;
+	if (data.file) {
+		showPhotoPreview(data.file, preview);
+	} else {
+		const img = createImg(data.img);
+		preview.innerHTML = "";
+		preview.append(img);
+	}
 }
 
 function showPhotoPreview(file, appendTo) {
@@ -273,7 +282,6 @@ function showPhotoPreview(file, appendTo) {
 			appendTo.innerHTML = "";
 			appendTo.append(img);
 		}
-		console.log(newProduct.file);
 	};
 	reader.readAsDataURL(file);
 }
@@ -300,7 +308,6 @@ function handleSubmit(e) {
 	if (isEditMode) {
 		updateProduct(product, productId);
 	} else {
-	
 		product.id = generateId(product.provider, product.category);
 		inventoryList.push(product);
 		const tableRow = createTableItem(product);
@@ -321,12 +328,12 @@ function getFormValues(e) {
 	newProduct.size = e.target.size.value;
 	newProduct.price = e.target.price.value;
 	newProduct.quantity_available = e.target.qty.value;
-	
+
 	return newProduct;
 }
 
 function generateId(provider, category) {
-	console.log(provider, category);
+
 	const prov = providerList.find((ele) => ele.name === provider);
 	const cat = categoryList.find((ele) => ele.name === category);
 	return `${inventoryList.length + 1}-${prov.id}-${cat.id}`;
@@ -429,7 +436,6 @@ function createTableItem(item) {
 }
 
 function removeProduct(id) {
-	console.log(id, "k hay");
 	inventoryList = inventoryList.filter((ele) => ele.id !== id);
 	document.getElementById(id).remove();
 	if (inventoryList.length === 0) {
@@ -437,6 +443,5 @@ function removeProduct(id) {
 		tableBody.style.textAlign = "center";
 		tableBody.style.paddingTop = "1em";
 	}
-	console.log(inventoryList, "inventoryList");
 }
 //Form End----------
