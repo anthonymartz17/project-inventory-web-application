@@ -131,6 +131,59 @@ header {
 	right: 0;
 	pointer-events: all;
 }
+.card__rows:nth-child(odd) {
+	background-color: var(--light-color);
+}
+
+.card__photo--container {
+	padding: 0;
+	margin: 0;
+	border-radius: 5px;
+	display: grid;
+	place-items: center;
+	overflow: hidden;
+	margin-bottom: 1em;
+	height: 18em;
+
+}
+.card__photo--container img{
+	margin: 0;
+	width: 100%;
+	max-width:500px;
+	/* max-height: 700px; */
+	object-fit: contain;
+}
+
+.card__photo {
+
+}
+
+.card__rows {
+	display: grid;
+	grid-template-columns: 35% 1fr;
+	gap: 1em;
+	border-bottom: 1px solid var(--mid-color);
+}
+.card__rows b {
+	border-right: 1px solid var(--mid-color);
+	padding: 5px;
+	
+}
+.card__rows p {
+	padding: 5px;
+}
+
+.card__btns {
+	margin-top: 20px;
+	text-align: end;
+}
+.card__btn {
+}
+.card__btn--edit {
+	margin-bottom: 5px;
+}
+.card__btn--delete {
+}
 
 main {
 	grid-area: main;
@@ -160,7 +213,7 @@ main {
 
 .btn__primary,
 .btn__secondary {
-	width: 160px;
+	width: 100%;
 	padding: 0.5em 1em;
 	border-radius: 5px;
 	color: var(--lightest-color);
@@ -182,12 +235,10 @@ main {
 }
 
 .table__container {
-	/* min-width: 400px; */
+	display: none;
 	overflow-x: auto;
 	background-color: var(--white-color);
 	margin-block: 1em;
-	/* min-width: 15em; */
-	/* overflow: hidden; */
 }
 .card {
 	border-radius: 5px;
@@ -220,14 +271,6 @@ tbody {
 	background-color: var(--lightest-color);
 	padding-block: 5px;
 }
-/* tbody {
-	display: grid;
-	grid-template-columns: auto;
-	grid-template-rows: auto;
-	max-height: 38em;
-	overflow-x: auto;
-	overflow-y: auto;
-} */
 
 .actions {
 	position: absolute;
@@ -283,6 +326,9 @@ body {
 }
 
 /* Form start */
+.btn__cancel{
+	margin-bottom: 5px;
+}
 .form__modal {
 	position: absolute;
 	width: 100%;
@@ -368,11 +414,25 @@ footer {
 footer small {
 	display: block;
 }
+.card__product--mobile{
+
+}
 
 /* Media queries Start */
+@media(min-width:450px){
+	.card__product--mobile{
+		
+	}
+}
 
 @media (min-width: 768px) {
 	#menu-bars {
+		display: none;
+	}
+	.table__container {
+		display: block;
+	}
+	.mobile-cards {
 		display: none;
 	}
 
@@ -393,7 +453,7 @@ footer small {
 	}
 	.control__sort {
 		order: 2;
-		padding: 0.5em;   
+		padding: 0.5em;
 	}
 
 	.control__button--new {
@@ -417,7 +477,6 @@ footer small {
 	.form__card {
 		height: fit-content;
 	}
-
 }
 @media (min-width: 1200px) {
 	main {

@@ -5,7 +5,7 @@ let productId = null;
 const newProduct = {};
 let inventoryList = [
 	{
-		id: "1-AMZ-APP",
+		id: "AMZ-APP-1",
 		provider: "AMAZON",
 		name: "Men's Cotton T-Shirt",
 		brand: "NIKE",
@@ -17,7 +17,7 @@ let inventoryList = [
 		img: "./assets/Screenshot 2024-03-20 at 8.55.49 PM.png",
 	},
 	{
-		id: "2-NK-SHO",
+		id: "NK-SHO-2",
 		provider: "NIKE",
 		name: "Women's Running Shoes",
 		brand: "NIKE",
@@ -29,7 +29,7 @@ let inventoryList = [
 		img: "./assets/Screenshot 2024-03-20 at 8.57.10 PM.png",
 	},
 	{
-		id: "3-ADI-ACC",
+		id: "ADI-ACC-3",
 		provider: "ALIBABA",
 		name: "Leather Wallet",
 		brand: "Adidas",
@@ -59,6 +59,11 @@ const searchBar = document.querySelector(".control__search");
 searchBar.addEventListener("keyup", searchItem);
 const filters = document.getElementById("filters");
 const tableBody = document.querySelector("#table-body");
+const desktopContent = document.querySelector(".table__container");
+const cardContainerMobile = document.querySelector(".mobile-cards");
+const productListDesktop = document.querySelectorAll(".table__row")
+const productListMobile = document.querySelectorAll(".card__product--mobile")
+
 filters.addEventListener("change", applyFilter);
 
 //On Created___________
@@ -67,12 +72,19 @@ window.addEventListener("load", () => {
 	const currentYear = new Date();
 	year.append(currentYear.getFullYear());
 
+	generateTableContent();
+});
+
+
+function generateTableContent() {
 	if (inventoryList.length > 0) {
 		inventoryList.forEach((ele) => {
 			if (ele.img) {
 			}
 			const tableRow = createTableItem(ele);
 			tableBody.append(tableRow);
+			const card = createCardProductMobile(ele);
+			cardContainerMobile.append(card);
 		});
 	} else {
 		const tableBody = document.getElementById("table-body");
@@ -81,7 +93,7 @@ window.addEventListener("load", () => {
 		tableBody.style.textAlign = "center";
 		tableBody.style.paddingTop = "2em";
 	}
-});
+}
 
 //Mobile Menu Start----------
 
@@ -191,8 +203,10 @@ function searchItem(e) {
 	const searchWord = e.target.value.toLowerCase();
 	tableBody.innerHTML = "";
 	const filteredList = inventoryList.filter((ele) =>
-		Object.values(ele).some((item) =>
-			String(item).toLocaleLowerCase().includes(searchWord)
+		Object.values(ele).some(
+			(item) =>
+				String(item).toLocaleLowerCase().startsWith(searchWord) ||
+				String(item).toLocaleLowerCase().includes(searchWord)
 		)
 	);
 	if (filteredList.length === 0) {
@@ -334,19 +348,19 @@ function getFormValues(e) {
 function generateId(provider, category) {
 	const prov = providerList.find((ele) => ele.name === provider);
 	const cat = categoryList.find((ele) => ele.name === category);
-	return `${inventoryList.length + 1}-${prov.id}-${cat.id}`;
+	return `${prov.id}-${cat.id}-${inventoryList.length + 1}`;
 }
 
 function updateProduct(product, id) {
-
 	const productToUpdate = inventoryList.find((ele) => ele.id === id);
 	Object.assign(productToUpdate, product);
-	updateDom(productToUpdate);
+
+	updateDom(productToUpdate, desktopContent);
+	updateDom(productToUpdate, cardContainerMobile);
 }
 
-function updateDom(product) {
-	console.log(product,'both vals')
-	const row = document.getElementById(product.id);
+function updateDom(product, content) {
+	const row = content.querySelector(`#${product.id}`);
 	row.querySelector("#td_name").innerText = product.name;
 	row.querySelector("#td_brand").innerText = product.brand;
 	row.querySelector("#td_provider").innerText = product.provider;
@@ -357,7 +371,7 @@ function updateDom(product) {
 		product.quantity_available > 0 ? "In Stock" : "Out of Stock";
 	const imgEle = row.querySelector("#td_img");
 	if (product.file) {
-		delete product.img
+		delete product.img;
 		showPhotoPreview(product.file, imgEle);
 	} else {
 		const img = createImg(product.img);
@@ -427,8 +441,11 @@ function createTableItem(item) {
 	const delBtn = document.createElement("p");
 	delBtn.classList.add("actions__items");
 	delBtn.addEventListener("click", closeActionCard);
-	delBtn.addEventListener("click", (e) =>
+	delBtn.addEventListener("click", (e) => {
+		
+
 		removeProduct(e.target.closest(".table__row").id)
+	}
 	);
 	const delIcon = document.createElement("i");
 	delIcon.classList.add("fa-solid", "fa-trash-can");
@@ -443,10 +460,86 @@ function createTableItem(item) {
 	tableRow.append(tableData);
 	return tableRow;
 }
+function createCardProductMobile(item) {
+	const card = document.createElement("div");
+	card.id = item.id;
+	card.classList.add("card", "card__product--mobile");
+
+	const photoContainer = document.createElement("div");
+	photoContainer.id = "td_img";
+	photoContainer.classList.add("card__photo--container");
+
+	if (item.file) {
+		showPhotoPreview(item.file, photoContainer);
+	} else {
+		const img = createImg(item.img);
+		photoContainer.append(img);
+	}
+	card.append(photoContainer);
+	const rows = [
+		{ name: "Id", innerText: item.id, tableData_id: "td__id" },
+		{ name: "Name", innerText: item.name, tableData_id: "td_name" },
+		{ name: "Brand", innerText: item.brand, tableData_id: "td_brand" },
+		{ name: "Provider", innerText: item.provider, tableData_id: "td_provider" },
+		{
+			name: "Qty",
+			innerText: item.quantity_available,
+			tableData_id: "td_quantity_available",
+		},
+		{ name: "Price", innerText: item.price, tableData_id: "td_price" },
+		{
+			name: "Status",
+			innerText: item.quantity_available > 0 ? "In Stock" : "Out of Stock",
+			tableData_id: "td_status",
+		},
+	];
+
+	const rowsContainer = document.createElement("div");
+	rowsContainer.classList.add("card__rows--container");
+
+	rows.forEach((ele) => {
+		const cardRow = document.createElement("div");
+		cardRow.classList.add("card__rows");
+		cardRow.innerHTML = `
+		<b>${ele.name}</b><p id=${ele.tableData_id}>${ele.innerText}</p>
+		`;
+		rowsContainer.append(cardRow);
+	});
+
+	card.append(rowsContainer);
+
+	const cardBtnContainer = document.createElement("div");
+	cardBtnContainer.classList.add("card__btns");
+	cardBtnContainer.innerHTML = `
+	<button type="button" class="card__btn--edit btn__secondary">Edit</button>
+	<button type="button" class="card__btn--delete btn__primary">Delete</button>
+	`;
+
+	const editBtn = cardBtnContainer.querySelector(".card__btn--edit");
+	editBtn.addEventListener("click", (e) => showForm(e, item.id));
+	// editBtn.addEventListener("click", closeActionCard);
+
+	const delBtn = cardBtnContainer.querySelector(".card__btn--delete");
+	// delBtn.addEventListener("click", closeActionCard);
+	delBtn.addEventListener("click", (e) =>
+		removeProduct(e.target.closest(".card__product--mobile").id)
+	);
+	card.append(cardBtnContainer);
+
+	return card;
+}
 
 function removeProduct(id) {
 	inventoryList = inventoryList.filter((ele) => ele.id !== id);
-	document.getElementById(id).remove();
+
+	const productListDesktop = document.querySelectorAll(".table__row")
+	const productListMobile = document.querySelectorAll(".card__product--mobile")
+	const productDesktop = [...productListDesktop].find(ele => ele.id === id)
+	const productMobile = [...productListMobile].find(ele => ele.id === id)
+
+	productDesktop.remove()
+	productMobile.remove()
+
 	if (inventoryList.length === 0) {
 		tableBody.innerHTML = "No products added";
 		tableBody.style.textAlign = "center";
