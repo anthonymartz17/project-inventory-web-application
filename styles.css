@@ -174,13 +174,15 @@ header {
 }
 
 .card__btns {
-	margin-top: 20px;
-	text-align: end;
+	display: flex;
+	flex-direction: column;
+	margin-top: 1em;
+	gap: .5em;
 }
 .card__btn {
 }
 .card__btn--edit {
-	margin-bottom: 5px;
+	/* margin-bottom: 5px; */
 }
 .card__btn--delete {
 }
@@ -420,9 +422,13 @@ footer small {
 
 /* Media queries Start */
 @media(min-width:450px){
-	.card__product--mobile{
-		
-	}
+.card__btns{
+flex-direction: row;
+}
+
+.control__button--new {
+	width: 40%;
+}
 }
 
 @media (min-width: 768px) {
@@ -458,6 +464,7 @@ footer small {
 
 	.control__button--new {
 		order: 3;
+		width: 100%;
 	}
 	.form__card {
 		width: 80%;
