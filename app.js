@@ -187,14 +187,21 @@ function applyFilter(e) {
 	}
 
 	if (filtered.length === 0) {
-		tableBody.innerHTML = `No products found under ${e.target.value}`;
+		tableBody.innerHTML = `No products found under "${e.target.value}"`;
 		tableBody.style.textAlign = "center";
 		tableBody.style.paddingTop = "1em";
+		cardContainerMobile.innerHTML = `No products found under "${e.target.value}"`;
+		cardContainerMobile.style.textAlign = "center";
+		cardContainerMobile.style.paddingTop = "1em";
+
 	} else {
 		tableBody.innerHTML = "";
+		cardContainerMobile.innerHTML = "";
 		filtered.forEach((ele) => {
 			const tableRow = createTableItem(ele);
 			tableBody.append(tableRow);
+			const card = createCardProductMobile(ele);
+			cardContainerMobile.append(card);
 		});
 	}
 }
@@ -202,6 +209,7 @@ function applyFilter(e) {
 function searchItem(e) {
 	const searchWord = e.target.value.toLowerCase();
 	tableBody.innerHTML = "";
+	cardContainerMobile.innerHTML = "";
 	const filteredList = inventoryList.filter((ele) =>
 		Object.values(ele).some(
 			(item) =>
@@ -213,10 +221,15 @@ function searchItem(e) {
 		tableBody.innerHTML = `No products found under - "${e.target.value}"`;
 		tableBody.style.textAlign = "center";
 		tableBody.style.paddingTop = "1em";
+		cardContainerMobile.innerHTML = `No products found under "${e.target.value}"`;
+		cardContainerMobile.style.textAlign = "center";
+		cardContainerMobile.style.paddingTop = "1em";
 	} else {
 		filteredList.forEach((ele) => {
 			const tableRow = createTableItem(ele);
 			tableBody.append(tableRow);
+			const card = createCardProductMobile(ele);
+			cardContainerMobile.append(card);
 		});
 	}
 }
