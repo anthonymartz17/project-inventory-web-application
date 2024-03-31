@@ -4,13 +4,12 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="./styles.css" />
-		<link rel="import" href="./form-new-product.html" id="form-new-product" />
 		<script src="./app.js" defer></script>
 		<script
 			src="https://kit.fontawesome.com/706abcc79b.js"
 			crossorigin="anonymous"
 		></script>
-		<title>Document</title>
+		<title>Martz</title>
 	</head>
 	<body>
 		<header>
@@ -26,9 +25,9 @@
                 <i class="fa-solid fa-warehouse"></i>
                 <a href="#">Inventory</a>
               </li>
-              <li class="navigation__item--mobile">
+              <li class="navigation__item--mobile" id="color-me-mobile">
                 <i class="fa-solid fa-store"></i>
-                <a href="#">Store</a>
+                <a href="#" id="#color-me-mobile-link">Color me</a>
               </li>
             </ul>
           </div>
@@ -37,8 +36,8 @@
               <a href="#">Inventory</a>
             </li>
   
-            <li class="navigation__item">
-              <a href="#">Store</a>
+            <li class="navigation__item" id="color-me-dskt">
+              <a href="#" id="#color-me-mobile-dskt">Color me</a>
             </li>
           </ul>
         </nav>
@@ -235,5 +234,93 @@
 				</div>
 			</form>
 		</div>
+    <section class="colors__controls" id="colors-controls">
+      <div class="controls__wrapper card">
+
+        <div class="control__color--container">
+          <label for="">Light-text</label>
+          <input
+            type="color"
+            name="light-text"
+            id="--light-text"
+            value="#ffffff"
+  
+          />
+        </div>
+        <div  class="control__color--container">
+          <label for="">Dark-text</label>
+          <input
+            type="color"
+            name="dark-text"
+            id="--dark-text"
+            value="#545454"
+  
+          />
+        </div>
+        <div class="control__color--container">
+          <label for="">Lightest-bg</label>
+          <input
+            type="color"
+            name="lightest-bg"
+            id="--lightest-bg"
+            value="#ffffff"
+  
+          />
+        </div>
+        <div  class="control__color--container">
+          <label for="">Soft-tone</label>
+          <input
+            type="color"
+            name="soft-tone"
+            id="--soft-tone"
+            value="#d9d9d9"
+  
+          />
+        </div>
+        <div class="control__color--container">
+          <label for="">Mid-tone</label>
+          <input
+            type="color"
+            name="mid-tone"
+            id="--mid-tone"
+            value="#a6a6a6"
+  
+          />
+        </div>
+        <div  class="control__color--container">
+          <label for="">Primary</label>
+          <input
+            type="color"
+            name="primary"
+            id="--primary"
+            value="#545454"
+  
+          />
+        </div>
+        <div class="control__color--container">
+          <label for="">Secondary</label>
+          <input
+            type="color"
+            name="secondary"
+            id="--secondary"
+            value="#636363"
+  
+          />
+        </div>
+        <div  class="control__color--container">
+          <label for="">Box-shadow</label>
+          <input
+            type="color"
+            name="dark-shadow"
+            id="--dark-shadow"
+            value="#000000"
+  
+          />
+        </div>
+        <div class="color__control_btn-container">
+          <button class="btn__primary color-control-btn" id="color-controls-btn">Close</button>
+        </div>
+      </div>
+    </section>
 	</body>
 </html>

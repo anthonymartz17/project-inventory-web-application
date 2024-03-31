@@ -61,8 +61,8 @@ const filters = document.getElementById("filters");
 const tableBody = document.querySelector("#table-body");
 const desktopContent = document.querySelector(".table__container");
 const cardContainerMobile = document.querySelector(".mobile-cards");
-const productListDesktop = document.querySelectorAll(".table__row")
-const productListMobile = document.querySelectorAll(".card__product--mobile")
+const productListDesktop = document.querySelectorAll(".table__row");
+const productListMobile = document.querySelectorAll(".card__product--mobile");
 
 filters.addEventListener("change", applyFilter);
 
@@ -74,7 +74,6 @@ window.addEventListener("load", () => {
 
 	generateTableContent();
 });
-
 
 function generateTableContent() {
 	if (inventoryList.length > 0) {
@@ -193,7 +192,6 @@ function applyFilter(e) {
 		cardContainerMobile.innerHTML = `No products found under "${e.target.value}"`;
 		cardContainerMobile.style.textAlign = "center";
 		cardContainerMobile.style.paddingTop = "1em";
-
 	} else {
 		tableBody.innerHTML = "";
 		cardContainerMobile.innerHTML = "";
@@ -455,11 +453,8 @@ function createTableItem(item) {
 	delBtn.classList.add("actions__items");
 	delBtn.addEventListener("click", closeActionCard);
 	delBtn.addEventListener("click", (e) => {
-		
-
-		removeProduct(e.target.closest(".table__row").id)
-	}
-	);
+		removeProduct(e.target.closest(".table__row").id);
+	});
 	const delIcon = document.createElement("i");
 	delIcon.classList.add("fa-solid", "fa-trash-can");
 	delBtn.append(delIcon);
@@ -545,13 +540,13 @@ function createCardProductMobile(item) {
 function removeProduct(id) {
 	inventoryList = inventoryList.filter((ele) => ele.id !== id);
 
-	const productListDesktop = document.querySelectorAll(".table__row")
-	const productListMobile = document.querySelectorAll(".card__product--mobile")
-	const productDesktop = [...productListDesktop].find(ele => ele.id === id)
-	const productMobile = [...productListMobile].find(ele => ele.id === id)
+	const productListDesktop = document.querySelectorAll(".table__row");
+	const productListMobile = document.querySelectorAll(".card__product--mobile");
+	const productDesktop = [...productListDesktop].find((ele) => ele.id === id);
+	const productMobile = [...productListMobile].find((ele) => ele.id === id);
 
-	productDesktop.remove()
-	productMobile.remove()
+	productDesktop.remove();
+	productMobile.remove();
 
 	if (inventoryList.length === 0) {
 		tableBody.innerHTML = "No products added";
@@ -560,3 +555,58 @@ function removeProduct(id) {
 	}
 }
 //Form End----------
+
+// Color controls--------
+const colorMeDesktop = document.querySelector("#color-me-dskt");
+const colorMeMobile = document.querySelector("#color-me-mobile");
+const colorControls = document.querySelector("#colors-controls");
+const colorControlBtn = document.querySelector("#color-controls-btn");
+[colorMeDesktop, colorMeMobile, colorControlBtn].forEach((ele) => {
+	ele.addEventListener("click", showColorControls);
+});
+// colorMe.addEventListener("click", (e) => closeColorControls(e))
+
+function showColorControls(e) {
+	e.preventDefault();
+	console.log(e.target.id);
+	const ids = ["color-me-dskt", "color-me-mobile"];
+	if (
+		ids.some((ele) => ele === e.target.id || ele === e.target.parentElement.id)
+	) {
+		colorControls.style.display = "grid";
+	} else if (e.target.id === "color-controls-btn") {
+		colorControls.style.display = "none";
+	}
+}
+
+const rootStyles = document.querySelector(":root");
+const colorVariables = getComputedStyle(rootStyles);
+
+const lightText = document.querySelector("#--light-text");
+const darkText = document.querySelector("#--dark-text");
+const lightestBg = document.querySelector("#--lightest-bg");
+const softTone = document.querySelector("#--soft-tone");
+const midTone = document.querySelector("#--mid-tone");
+const primary = document.querySelector("#--primary");
+const secondary = document.querySelector("#--secondary");
+const darkShadow = document.querySelector("#--dark-shadow");
+
+const colorElements = [
+	lightText,
+	darkText,
+	lightestBg,
+	softTone,
+	midTone,
+	primary,
+	secondary,
+	darkShadow,
+];
+colorElements.forEach((ele) => {
+	ele.addEventListener("input", (e) =>
+		updateColor(e.target.id, e.target.value)
+	);
+});
+
+function updateColor(colorVariable, newColor) {
+	rootStyles.style.setProperty(colorVariable, newColor);
+}
